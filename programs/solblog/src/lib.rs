@@ -8,18 +8,15 @@ pub mod solblog {
 
     pub fn initialize(
         ctx: Context<Initialize>,
-        author: Pubkey,
         title: String,
-        content: String,
-        likes: u64,
-        dislikes: u64,
+        content: String
     ) -> Result<()> {
         let blog = &mut ctx.accounts.blog;
-        blog.author = author;
+        blog.author = ctx.accounts.poster.key();
         blog.title = title;
         blog.content = content;
-        blog.likes = likes;
-        blog.dislikes = dislikes;
+        blog.likes = 0;
+        blog.dislikes = 0;
         msg!("Successfully posted blog");
         Ok(())
     }
@@ -28,7 +25,7 @@ pub mod solblog {
 #[derive(Accounts)]
 #[instruction(title:String,content:String)]
 pub struct Initialize<'info> {
-    #[account(init,payer=poster,space=8+32+4+title.len()+4+content.len()+8+8)]
+    #[account(init,seeds=[title.as_bytes(),poster.key().as_ref()],bump,payer=poster,space=8+32+4+title.len()+4+content.len()+8+8)]
     pub blog: Account<'info, Blog>,
     #[account(mut)]
     pub poster: Signer<'info>,
