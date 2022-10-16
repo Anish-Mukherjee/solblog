@@ -2,7 +2,7 @@
 seeds = false
 skip-lint = false
 [programs.localnet]
-solblog = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
+solblog = "75UsBAF7211hxGY4Fzs2kMYAk3QTutTvxjYejA9TNfB4"
 
 [registry]
 url = "https://api.apr.dev"
